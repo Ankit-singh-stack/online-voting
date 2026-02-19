@@ -1,0 +1,257 @@
+@import "tailwindcss";
+
+@layer base {
+  /* Responsive Typography */
+  html {
+    @apply text-base;
+  }
+  
+  @screen sm {
+    html {
+      @apply text-sm;
+    }
+  }
+  
+  @screen md {
+    html {
+      @apply text-base;
+    }
+  }
+  
+  @screen lg {
+    html {
+      @apply text-base;
+    }
+  }
+
+  body {
+    @apply bg-gray-50;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Responsive container padding */
+  .container-custom {
+    @apply px-4 sm:px-6 lg:px-8 mx-auto;
+    max-width: 100%;
+  }
+  
+  @screen sm {
+    .container-custom {
+      max-width: 640px;
+    }
+  }
+  
+  @screen md {
+    .container-custom {
+      max-width: 768px;
+    }
+  }
+  
+  @screen lg {
+    .container-custom {
+      max-width: 1024px;
+    }
+  }
+  
+  @screen xl {
+    .container-custom {
+      max-width: 1280px;
+    }
+  }
+}
+
+@layer components {
+  /* Responsive Buttons */
+  .btn-primary {
+    @apply bg-blue-600 text-white px-3 py-2 sm:px-4 sm:py-2.5 lg:px-6 lg:py-3 
+           rounded-lg hover:bg-blue-700 transition duration-200 font-medium
+           text-sm sm:text-base w-full sm:w-auto;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-200 text-gray-800 px-3 py-2 sm:px-4 sm:py-2.5 lg:px-6 lg:py-3 
+           rounded-lg hover:bg-gray-300 transition duration-200 font-medium
+           text-sm sm:text-base w-full sm:w-auto;
+  }
+  
+  .btn-danger {
+    @apply bg-red-600 text-white px-3 py-2 sm:px-4 sm:py-2.5 lg:px-6 lg:py-3 
+           rounded-lg hover:bg-red-700 transition duration-200 font-medium
+           text-sm sm:text-base w-full sm:w-auto;
+  }
+  
+  /* Responsive Input Fields */
+  .input-field {
+    @apply w-full px-3 py-2 sm:px-4 sm:py-2.5 border border-gray-300 
+           rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 
+           focus:border-transparent text-sm sm:text-base;
+  }
+  
+  /* Responsive Cards */
+  .card {
+    @apply bg-white rounded-lg shadow-lg p-4 sm:p-6 lg:p-8;
+  }
+  
+  /* Responsive Grid */
+  .responsive-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6;
+  }
+  
+  /* Responsive Flex */
+  .responsive-flex {
+    @apply flex flex-col sm:flex-row items-start sm:items-center gap-4;
+  }
+  
+  /* Responsive Text */
+  .heading-1 {
+    @apply text-2xl sm:text-3xl md:text-4xl font-bold;
+  }
+  
+  .heading-2 {
+    @apply text-xl sm:text-2xl md:text-3xl font-bold;
+  }
+  
+  .heading-3 {
+    @apply text-lg sm:text-xl md:text-2xl font-bold;
+  }
+  
+  /* Responsive Padding */
+  .section-padding {
+    @apply py-8 sm:py-12 lg:py-16;
+  }
+  
+  /* Mobile Menu */
+  .mobile-menu {
+    @apply fixed inset-0 bg-white z-50 transform transition-transform duration-300 lg:hidden;
+  }
+  
+  .mobile-menu-open {
+    @apply translate-x-0;
+  }
+  
+  .mobile-menu-closed {
+    @apply translate-x-full;
+  }
+  
+  /* Responsive Table */
+  .responsive-table {
+    @apply w-full overflow-x-auto;
+  }
+  
+  .responsive-table table {
+    @apply min-w-full;
+  }
+  
+  @screen sm {
+    .responsive-table table {
+      min-width: 600px;
+    }
+  }
+  
+  @screen md {
+    .responsive-table table {
+      min-width: 768px;
+    }
+  }
+  
+  /* Touch-friendly buttons for mobile */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+  }
+  
+  /* Hide on mobile, show on desktop */
+  .desktop-only {
+    @apply hidden lg:block;
+  }
+  
+  /* Hide on desktop, show on mobile */
+  .mobile-only {
+    @apply block lg:hidden;
+  }
+  
+  /* Responsive images */
+  .responsive-image {
+    @apply w-full h-auto object-cover;
+  }
+  
+  /* Responsive modal */
+  .modal-content {
+    @apply w-full sm:max-w-lg md:max-w-2xl lg:max-w-4xl mx-auto 
+           bg-white rounded-xl p-4 sm:p-6 lg:p-8;
+  }
+}
+
+/* Custom animations for mobile */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Increase touch targets on mobile */
+  button, a, .clickable {
+    @apply min-h-[44px] min-w-[44px];
+  }
+  
+  /* Remove hover effects on touch devices */
+  .hover\:scale-105:hover {
+    transform: none;
+  }
+  
+  /* Add active state for touch feedback */
+  .touch-active:active {
+    @apply opacity-70;
+  }
+}
+
+/* Landscape mode optimizations */
+@media (orientation: landscape) and (max-height: 600px) {
+  .modal-content {
+    @apply max-h-screen overflow-y-auto;
+  }
+  
+  .section-padding {
+    @apply py-4;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .dark\:bg-gray-900 {
+    @apply bg-gray-900;
+  }
+  
+  .dark\:text-white {
+    @apply text-white;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none;
+  }
+  
+  .print-only {
+    display: block;
+  }
+}
