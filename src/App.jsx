@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
@@ -38,6 +38,114 @@ import Footer from './components/common/Footer';
 // Styles
 import './styles/animations.css';
 
+function AnimatedRoutes() {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+
+        {/* Public Routes */}
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        {/* Protected Voter Routes */}
+        <Route path="/dashboard" element={
+          <PrivateRoute>
+            <VoterDashboard />
+          </PrivateRoute>
+        } />
+
+        <Route path="/elections/active" element={
+          <PrivateRoute>
+            <ActiveElections />
+          </PrivateRoute>
+        } />
+
+        <Route path="/elections/upcoming" element={
+          <PrivateRoute>
+            <UpcomingElections />
+          </PrivateRoute>
+        } />
+
+        <Route path="/elections/past" element={
+          <PrivateRoute>
+            <PastElections />
+          </PrivateRoute>
+        } />
+
+        <Route path="/vote/:id" element={
+          <PrivateRoute>
+            <CastVote />
+          </PrivateRoute>
+        } />
+
+        <Route path="/vote-confirmation" element={
+          <PrivateRoute>
+            <VoteConfirmation />
+          </PrivateRoute>
+        } />
+
+        <Route path="/history" element={
+          <PrivateRoute>
+            <VoterHistory />
+          </PrivateRoute>
+        } />
+
+        <Route path="/stats" element={
+          <PrivateRoute>
+            <VoterStats />
+          </PrivateRoute>
+        } />
+
+        <Route path="/profile" element={
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        } />
+
+        {/* Admin Routes */}
+        <Route path="/admin" element={
+          <PrivateRoute adminOnly>
+            <AdminDashboard />
+          </PrivateRoute>
+        } />
+
+        <Route path="/admin/elections" element={
+          <PrivateRoute adminOnly>
+            <ManageElections />
+          </PrivateRoute>
+        } />
+
+        <Route path="/admin/elections/create" element={
+          <PrivateRoute adminOnly>
+            <CreateElection />
+          </PrivateRoute>
+        } />
+
+        <Route path="/admin/candidates" element={
+          <PrivateRoute adminOnly>
+            <ManageCandidates />
+          </PrivateRoute>
+        } />
+
+        {/* 404 */}
+        <Route path="*" element={
+          <div className="min-h-screen flex items-center justify-center">
+            <div className="text-center">
+              <h1 className="text-6xl font-bold text-gray-900 mb-4">404</h1>
+              <p className="text-xl text-gray-600 mb-8">Page not found</p>
+            </div>
+          </div>
+        } />
+
+      </Routes>
+    </AnimatePresence>
+  );
+}
+
 function App() {
   return (
     <Router>
@@ -46,125 +154,8 @@ function App() {
           <div className="min-h-screen flex flex-col bg-gray-50">
             <Navbar />
             <div className="flex-grow">
-              <Toaster 
-                position="top-right"
-                toastOptions={{
-                  duration: 4000,
-                  style: {
-                    background: '#363636',
-                    color: '#fff',
-                    borderRadius: '12px',
-                  },
-                }}
-              />
-
-              <AnimatePresence mode="wait">
-                <Routes>
-
-                  {/* Public Routes */}
-                  <Route path="/" element={<LandingPage />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
-
-                  {/* Protected Voter Routes */}
-                  <Route path="/dashboard" element={
-                    <PrivateRoute>
-                      <VoterDashboard />
-                    </PrivateRoute>
-                  } />
-
-                  <Route path="/elections/active" element={
-                    <PrivateRoute>
-                      <ActiveElections />
-                    </PrivateRoute>
-                  } />
-
-                  <Route path="/elections/upcoming" element={
-                    <PrivateRoute>
-                      <UpcomingElections />
-                    </PrivateRoute>
-                  } />
-
-                  <Route path="/elections/past" element={
-                    <PrivateRoute>
-                      <PastElections />
-                    </PrivateRoute>
-                  } />
-
-                  <Route path="/vote/:id" element={
-                    <PrivateRoute>
-                      <CastVote />
-                    </PrivateRoute>
-                  } />
-
-                  <Route path="/vote-confirmation" element={
-                    <PrivateRoute>
-                      <VoteConfirmation />
-                    </PrivateRoute>
-                  } />
-
-                  <Route path="/history" element={
-                    <PrivateRoute>
-                      <VoterHistory />
-                    </PrivateRoute>
-                  } />
-
-                  <Route path="/stats" element={
-                    <PrivateRoute>
-                      <VoterStats />
-                    </PrivateRoute>
-                  } />
-
-                  <Route path="/profile" element={
-                    <PrivateRoute>
-                      <Profile />
-                    </PrivateRoute>
-                  } />
-
-                  {/* Protected Admin Routes */}
-                  <Route path="/admin" element={
-                    <PrivateRoute adminOnly>
-                      <AdminDashboard />
-                    </PrivateRoute>
-                  } />
-
-                  <Route path="/admin/elections" element={
-                    <PrivateRoute adminOnly>
-                      <ManageElections />
-                    </PrivateRoute>
-                  } />
-
-                  <Route path="/admin/elections/create" element={
-                    <PrivateRoute adminOnly>
-                      <CreateElection />
-                    </PrivateRoute>
-                  } />
-
-                  <Route path="/admin/candidates" element={
-                    <PrivateRoute adminOnly>
-                      <ManageCandidates />
-                    </PrivateRoute>
-                  } />
-
-                  {/* 404 Route */}
-                  <Route path="*" element={
-                    <div className="min-h-screen flex items-center justify-center">
-                      <div className="text-center">
-                        <h1 className="text-6xl font-bold text-gray-900 mb-4">404</h1>
-                        <p className="text-xl text-gray-600 mb-8">Page not found</p>
-                        <button 
-                          onClick={() => window.history.back()}
-                          className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transition-all"
-                        >
-                          Go Back
-                        </button>
-                      </div>
-                    </div>
-                  } />
-
-                </Routes>
-              </AnimatePresence>
+              <Toaster position="top-right" />
+              <AnimatedRoutes />
             </div>
             <Footer />
           </div>
